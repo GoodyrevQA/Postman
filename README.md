@@ -8,32 +8,23 @@
 ## 1. Получаем токен
 Отпправляем POST запрос на https://{{host}}/{{api_version}}/users/obtain-token
 с тестовыми username и password:
-'''json
+```json
 {
     "username":"qa@qa.qa",
     "password":"111"
 }
-'''
+```
 Полученный в ответе токен записываем в переменные коллекции с помощью скрипта JS (вкладка Tests, скрипт выполнится после запроса):
-'''javascript
+```javascript
 var jsonData = JSON.parse(responseBody);
 pm.collectionVariables.set("tokenn", jsonData.token);
-'''
-```javascript
-
-let greeting1 = 'Father!';
-
-console.log(greeting1);
-
-let greeting2 = 'Mother!';
-
-console.log(greeting2);
-
 ```
+
 ## 2. Создаем водителя
 POST на https://{{host}}/{{api_version}}/insured_objects/drivers
 В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}
 В body передаем информацию о водителе (свои данные для конфиденциальности я немного изменил):
+```json
 {
   "first_name": "Иван",
   "last_name": "Гудырев",
@@ -49,14 +40,18 @@ POST на https://{{host}}/{{api_version}}/insured_objects/drivers
     }
   ]
 }
+```
 Из ответа получаем id_driver:
+```javascript
 var a = JSON.parse(responseBody);
 pm.collectionVariables.set("id_driver", a.id);
+```
 
 ## 3. Создаем собственника
 POST на https://{{host}}/{{api_version}}/insured_objects/owners/natural_persons
 В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}
 Body - информация о собственнике:
+```json
 {
   "last_name": "Гурбановская",
   "first_name": "Леся",
@@ -87,14 +82,18 @@ Body - информация о собственнике:
     }
   ]
 }
+```
 Из ответа получаем id_owner:
+```javascript
 var b = JSON.parse(responseBody);
 pm.collectionVariables.set("id_owner", b.person);
+```
 
 ## 4. Создаем страхователя
 POST на https://{{host}}/{{api_version}}/insured_objects/insurants/natural_persons
 В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}
 Body - информация о страхователе:
+```json
 {
   "last_name": "Гурбановская",
   "first_name": "Леся",
@@ -135,14 +134,18 @@ Body - информация о страхователе:
         }
    ]
 }
+```
 Из ответа получаем id_insurant:
+```javascript
 var c = JSON.parse(responseBody);
 pm.collectionVariables.set("id_insurant", c.person);
+```
 
 ## 5. Создаем автомобиль
 POST на https://{{host}}/{{api_version}}/insured_objects/cars
 В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}
 Body - информация об автомобиле:
+```json
 {
   "car_model_id": 261020578,
   "engine_power": 110,
@@ -160,9 +163,12 @@ Body - информация об автомобиле:
     }
   ]
 }
+```
 Из ответа получаем id_vehicle:
+```javascript
 var d = JSON.parse(responseBody);
 pm.collectionVariables.set("id_vehicle", d.id);
+```
 
 ## 6. Создаем объект страхования - объединяем наши сущности
 POST на https://{{host}}/{{api_version}}/insured_objects/
