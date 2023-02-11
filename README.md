@@ -8,7 +8,7 @@
 ## 1. Получаем токен
 Отпправляем POST запрос на https://{{host}}/{{api_version}}/users/obtain-token
 с тестовыми username и password:
-'''
+'''json
 {
     "username":"qa@qa.qa",
     "password":"111"
