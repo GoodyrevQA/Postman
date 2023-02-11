@@ -7,11 +7,13 @@
 
 ## 1. Получаем токен
 Отпправляем POST запрос на https://{{host}}/{{api_version}}/users/obtain-token
-с тестовыми username и password:/
+с тестовыми username и password:
+'''
 {
     "username":"qa@qa.qa",
     "password":"111"
 }
+'''
 Полученный в ответе токен записываем в переменные коллекции с помощью скрипта JS (вкладка Tests, скрипт выполнится после запроса):
 var jsonData = JSON.parse(responseBody);
 pm.collectionVariables.set("tokenn", jsonData.token);
