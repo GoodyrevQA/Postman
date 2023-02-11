@@ -1,6 +1,6 @@
 # Postman
-## Insurance Agent
-[![Header]](https://github.com/GoodyrevQA/Postman/blob/main/assets/agent.png)](https://github.com/GoodyrevQA/Postman)
+## Insurance Agent  
+[![Header](https://github.com/GoodyrevQA/Postman/blob/main/assets/agent.png)](https://github.com/GoodyrevQA/Postman)  
 Тестовое задание для сайта https://partner.agentapp.ru/ по созданию договора страхования.  
 Для этого потребуется получить токен, создать водителя, владельца, страхователя, автомобиль, объединить их в объект страхования, создать договор.  
 
