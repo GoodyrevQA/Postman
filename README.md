@@ -19,7 +19,17 @@
 var jsonData = JSON.parse(responseBody);
 pm.collectionVariables.set("tokenn", jsonData.token);
 '''
+```javascript
 
+let greeting1 = 'Father!';
+
+console.log(greeting1);
+
+let greeting2 = 'Mother!';
+
+console.log(greeting2);
+
+```
 ## 2. Создаем водителя
 POST на https://{{host}}/{{api_version}}/insured_objects/drivers
 В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}
