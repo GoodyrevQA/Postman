@@ -15,8 +15,10 @@
 }
 '''
 Полученный в ответе токен записываем в переменные коллекции с помощью скрипта JS (вкладка Tests, скрипт выполнится после запроса):
+'''javascript
 var jsonData = JSON.parse(responseBody);
 pm.collectionVariables.set("tokenn", jsonData.token);
+'''
 
 ## 2. Создаем водителя
 POST на https://{{host}}/{{api_version}}/insured_objects/drivers
