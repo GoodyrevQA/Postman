@@ -3,7 +3,7 @@
 Для этого потребуется получить токен, создать водителя, владельца, страхователя, автомобиль, объединить их в объект страхования, создать договор.  
 
 ## 0. Создаем коллекцию в Postman, например AgentApp
-В variables коллекции создаем переменную *host*: partner.agentapp.ru и *api_version*: v1
+В variables коллекции создаем переменную ***host***: partner.agentapp.ru и ***api_version***: v1
 
 ## 1. Получаем токен
 Отпправляем POST запрос на https://{{host}}/{{api_version}}/users/obtain-token  
@@ -22,7 +22,7 @@ pm.collectionVariables.set("tokenn", jsonData.token);
 
 ## 2. Создаем водителя
 POST на https://{{host}}/{{api_version}}/insured_objects/drivers  
-В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}  
+В хедерах прокидываем полученный токен в формате Authorization: Token {{***tokenn***}}  
 В body передаем информацию о водителе (свои данные для конфиденциальности я немного изменил):  
 ```json
 {
@@ -41,7 +41,7 @@ POST на https://{{host}}/{{api_version}}/insured_objects/drivers
   ]
 }
 ```
-Из ответа получаем id_driver:
+Из ответа получаем ***id_driver***:
 ```javascript
 var a = JSON.parse(responseBody);
 pm.collectionVariables.set("id_driver", a.id);
@@ -49,7 +49,7 @@ pm.collectionVariables.set("id_driver", a.id);
 
 ## 3. Создаем собственника
 POST на https://{{host}}/{{api_version}}/insured_objects/owners/natural_persons  
-В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}  
+В хедерах прокидываем полученный токен в формате Authorization: Token {{***tokenn***}}  
 Body - информация о собственнике:  
 ```json
 {
@@ -83,7 +83,7 @@ Body - информация о собственнике:
   ]
 }
 ```
-Из ответа получаем id_owner:  
+Из ответа получаем ***id_owner***:  
 ```javascript
 var b = JSON.parse(responseBody);
 pm.collectionVariables.set("id_owner", b.person);
@@ -91,7 +91,7 @@ pm.collectionVariables.set("id_owner", b.person);
 
 ## 4. Создаем страхователя
 POST на https://{{host}}/{{api_version}}/insured_objects/insurants/natural_persons  
-В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}  
+В хедерах прокидываем полученный токен в формате Authorization: Token {{***tokenn***}}  
 Body - информация о страхователе:  
 ```json
 {
@@ -135,7 +135,7 @@ Body - информация о страхователе:
    ]
 }
 ```
-Из ответа получаем id_insurant:  
+Из ответа получаем ***id_insurant***:  
 ```javascript
 var c = JSON.parse(responseBody);
 pm.collectionVariables.set("id_insurant", c.person);
@@ -143,7 +143,7 @@ pm.collectionVariables.set("id_insurant", c.person);
 
 ## 5. Создаем автомобиль  
 POST на https://{{host}}/{{api_version}}/insured_objects/cars  
-В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}  
+В хедерах прокидываем полученный токен в формате Authorization: Token {{***tokenn***}}  
 Body - информация об автомобиле:  
 ```json
 {
@@ -164,7 +164,7 @@ Body - информация об автомобиле:
   ]
 }
 ```
-Из ответа получаем id_vehicle:
+Из ответа получаем ***id_vehicle***
 ```javascript
 var d = JSON.parse(responseBody);
 pm.collectionVariables.set("id_vehicle", d.id);
@@ -172,8 +172,47 @@ pm.collectionVariables.set("id_vehicle", d.id);
 
 ## 6. Создаем объект страхования - объединяем наши сущности
 POST на https://{{host}}/{{api_version}}/insured_objects/
-В хедерах прокидываем полученный токен в формате Authorization: Token {{tokenn}}
-Body - информация об автомобиле:
+В хедерах прокидываем полученный токен в формате Authorization: Token {{***tokenn***}}
+Body - информация id сущностей:
+```json
+{
+    "drivers": [
+        "{{id_driver}}"
+        ],
+    "owner": "{{id_owner}}",
+    "car": "{{id_vehicle}}",
+    "insurant": "{{id_insurant}}"
+}
+```
+
+## 7. Создаем договор  
+POST на https://{{host}}/v3/agreements/calculations  
+В хедерах прокидываем полученный токен в формате Authorization: Token {{***tokenn***}}  
+Body:  
+```json
+{
+  "valid_from": "2023-06-30",
+  "valid_to": "2024-06-29",
+  "insurance_period": 8,
+  "target_of_using": 11,
+  "drivers_ids": ["{{id_driver}}"],
+  "is_car_without_registration": false,
+  "engine_power": 110,
+  "has_car_trailer": false,
+  "car_type": "B",
+  "owner_registration":   {
+      "address_query": "г Томск, ул Говорова, д 62 к 30",
+      "address_type": "LEGAL_ADDRESS",
+      "region_kladr_id": "7000000000000",
+      "city_kladr_id": "7000000100000"
+    },
+  "periods": []
+}
+```
+
+
+
+
 
 
 
