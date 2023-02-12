@@ -4,6 +4,11 @@
 Тестовое задание для сайта https://partner.agentapp.ru/ по созданию договора страхования.  
 Для этого потребуется получить токен, создать водителя, владельца, страхователя, автомобиль, объединить их в объект страхования, создать договор.  
 
+### Languages and Tool useds:
+[![Visual](https://img.shields.io/badge/-Visual_Studio_Code-24292f??style=for-the-badge&logo=Visualstudiocode&logoColor=47c5fb)](https://github.com/GoodyrevQA)
+[![Postman](https://img.shields.io/badge/-Postman-24292f??style=for-the-badge&logo=Postman&logoColor=ff6c36)](https://github.com/GoodyrevQA/Postman)
+[![Git](https://img.shields.io/badge/-Git-24292f??style=for-the-badge&logo=Git&logoColor=f43010)](https://github.com/GoodyrevQA)
+
 ## 0. Создаем коллекцию в Postman, например AgentApp
 В variables коллекции создаем переменную ***host***: partner.agentapp.ru и ***api_version***: v1
 
